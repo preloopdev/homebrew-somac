@@ -10,7 +10,7 @@ permissions:
 jobs:
   formula:
     name: Audit and build formula
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       - name: Check out tap
         uses: actions/checkout@v4
