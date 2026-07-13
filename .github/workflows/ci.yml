@@ -1,0 +1,25 @@
+name: Formula CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  formula:
+    name: Audit and build formula
+    runs-on: macos-14
+    steps:
+      - name: Check out tap
+        uses: actions/checkout@v4
+
+      - name: Audit formula
+        run: brew audit --strict --online Formula/somac.rb
+
+      - name: Build and install formula
+        run: brew install --build-from-source --formula ./Formula/somac.rb
+
+      - name: Smoke test installed binary
+        run: somac --version
