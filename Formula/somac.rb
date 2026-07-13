@@ -9,7 +9,7 @@ class Somac < Formula
   depends_on macos: :sonoma
 
   def install
-    system "swift", "build", "-c", "release", "--disable-automatic-resolution", "--disable-sandbox"
+    system "swift", "build", "-c", "release", "--disable-automatic-resolution"
 
     bin.install ".build/release/somac"
     bin.install ".build/release/somac-agent"
