@@ -10,13 +10,22 @@ class Somac < Formula
 
   def install
     system "swift", "package", "resolve", "--disable-sandbox"
+
     parser_utilities = buildpath / ".build/checkouts/swift-argument-parser/Sources/ArgumentParser/Utilities"
-    inreplace parser_utilities / "Platform.swift", "static let _staticArguments", "nonisolated(unsafe) static let _staticArguments"
-    inreplace parser_utilities / "SwiftExtensions.swift", "#if compiler(>=6.2)", "#if compiler(>=6.3)"
+    inreplace parser_utilities / "Platform.swift",
+      "static let _staticArguments",
+      "nonisolated(unsafe) static let _staticArguments"
+    inreplace parser_utilities / "SwiftExtensions.swift",
+      "#if compiler(>=6.2)",
+      "#if compiler(>=6.3)"
+
     system "swift", "build", "-c", "release", "--disable-automatic-resolution", "--disable-sandbox"
+
     bin.install ".build/release/somac"
     bin.install ".build/release/somac-agent"
-    system "codesign", "--force", "--sign", "-", "--entitlements", buildpath / "somac.entitlements", bin / "somac"
+
+    system "codesign", "--force", "--sign", "-",
+      "--entitlements", buildpath / "somac.entitlements", bin / "somac"
     system "codesign", "--force", "--sign", "-", bin / "somac-agent"
   end
 
