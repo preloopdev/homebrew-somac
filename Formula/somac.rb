@@ -10,7 +10,7 @@ class Somac < Formula
 
   def install
     system "swift", "build", "-c", "release", "--disable-automatic-resolution", "--disable-sandbox",
-      "-Xswiftc", "-strict-concurrency=minimal"
+      "-Xswiftc", "-swift-version", "-Xswiftc", "5"
 
     bin.install ".build/release/somac"
     bin.install ".build/release/somac-agent"
