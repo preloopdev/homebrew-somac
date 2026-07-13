@@ -15,11 +15,14 @@ jobs:
       - name: Check out tap
         uses: actions/checkout@v4
 
+      - name: Register checked-out tap
+        run: brew tap preloopdev/somac "$GITHUB_WORKSPACE"
+
       - name: Audit formula
-        run: brew audit --strict --online Formula/somac.rb
+        run: brew audit --strict --online preloopdev/somac/somac
 
       - name: Build and install formula
-        run: brew install --build-from-source --formula ./Formula/somac.rb
+        run: brew install --build-from-source --formula preloopdev/somac/somac
 
       - name: Smoke test installed binary
-        run: somac --version
+        run: "$(brew --prefix somac)/bin/somac --version"
